@@ -25,14 +25,17 @@ func excCmd(cmd string, argsArr []string) (err error) {
 
 }
 func main() {
-	iface := flag.String("iface", "en0")
+	iface := flag.String("iface", "", "Interface you want to change the physical address")
+	newMac := flag.String("newMac", "", "Provide the new physical address")
+
+	flag.Parse()
 
 	// shutdown the wireless network
 	//excCmd("sudo", []string{"ifconfig", "en0", "down"})
 	//change the physical address
 	//excCmd("sudo", []string{"ifconfig", "en0", "hw", "ether", "00:11:22:33:44:55"})
-	excCmd("sudo", []string{"ifconfig", "en0", "ether", "00:11:22:33:44:55"})
+	excCmd("sudo", []string{"ifconfig", *iface, "ether", *newMac})
 
 	//bring back the wireless network up
-	excCmd("sudo", []string{"ifconfig", "en0", "up"})
+	excCmd("sudo", []string{"ifconfig", *iface, "up"})
 }
