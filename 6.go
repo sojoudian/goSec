@@ -6,7 +6,7 @@ import (
 	"sync"
 )
 
-func scanPort(port int, wg *sync.WaitGroup) {
+func ScanPort(port int, wg *sync.WaitGroup) {
 	defer wg.Done()
 	IP := "scanme.nmap.org"
 	address := fmt.Sprintf(IP+":%d", port)
@@ -24,7 +24,7 @@ func main() {
 	var wg sync.WaitGroup
 	for i := 0; i < 100; i++ {
 		wg.Add(1)
-		go scanPort(i, &wg)
+		go ScanPort(i, &wg)
 	}
 
 	wg.Wait()
