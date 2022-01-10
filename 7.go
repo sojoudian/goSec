@@ -16,7 +16,7 @@ func main() {
 	defer cancel()
 	scanner, err := nmap.NewScanner(
 		nmap.WithTargets(targetIP),
-		nmap.WithPorts("80,443,843,8080"),
+		nmap.WithPorts("80,443,8080"),
 		nmap.WithContext(ctx),
 	)
 	if err != nil {
@@ -34,9 +34,12 @@ func main() {
 		if len(host.Ports) == 0 || len(host.Addresses) == 0 {
 			continue
 		}
-		fmt.Printf("IP: %q ", host.Addresses[0])
+		fmt.Printf("IP: %q\n", host.Addresses[0])
 		if len(host.Addresses) > 1 {
 			fmt.Printf("MAC %v\n", host.Addresses[1])
+		}
+		for _, port := range host.Ports {
+			fmt.Printf("\t Port %d %s %s %s\n", port.ID, port.Protocol, port.State, port.Service.Name)
 		}
 	}
 }
